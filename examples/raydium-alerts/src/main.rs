@@ -6,6 +6,7 @@ use carbon_core::{
     metrics::MetricsCollection,
     processor::Processor,
 };
+use carbon_prometheus_metrics::PrometheusMetrics;
 use carbon_raydium_amm_v4_decoder::{
     accounts::RaydiumAmmV4Account, instructions::RaydiumAmmV4Instruction, RaydiumAmmV4Decoder,
 };
@@ -66,8 +67,9 @@ pub async fn main() -> CarbonResult<()> {
     carbon_core::pipeline::Pipeline::builder()
         .datasource(yellowstone_grpc)
         .instruction(RaydiumAmmV4Decoder, RaydiumAmmV4InstructionProcessor)
-        .account(RaydiumAmmV4Decoder, RaydiumAmmV4AccountProcessor)
+        // .account(RaydiumAmmV4Decoder, RaydiumAmmV4AccountProcessor)
         .shutdown_strategy(carbon_core::pipeline::ShutdownStrategy::Immediate)
+        .metrics(Arc::new(PrometheusMetrics::new()))
         .build()?
         .run()
         .await?;
@@ -95,22 +97,22 @@ impl Processor for RaydiumAmmV4InstructionProcessor {
 
         match instruction.data {
             RaydiumAmmV4Instruction::Initialize2(init_pool) => {
-                println!(
-                    "\nsignature: {:#?}\nInitialize: {:#?}\nAccounts: {:#?}",
-                    signature, init_pool, accounts
-                );
+                // println!(
+                //     "\nsignature: {:#?}\nInitialize: {:#?}\nAccounts: {:#?}",
+                //     signature, init_pool, accounts
+                // );
             }
             RaydiumAmmV4Instruction::SwapBaseIn(swap) => {
-                println!(
-                    "\nsignature: {:#?}\nSwap: {:#?}",
-                    signature, swap
-                );
+                // println!(
+                //     "\nsignature: {:#?}\nSwap: {:#?}",
+                //     signature, swap
+                // );
             }
             RaydiumAmmV4Instruction::SwapBaseOut(swap) => {
-                println!(
-                    "\nsignature: {:#?}\nSwap: {:#?}",
-                    signature, swap
-                );
+                // println!(
+                //     "\nsignature: {:#?}\nSwap: {:#?}",
+                //     signature, swap
+                // );
             }
             _ => {}
         };

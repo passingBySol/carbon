@@ -75,8 +75,8 @@ impl Datasource for YellowstoneGrpcGeyserClient {
             .map_err(|err| carbon_core::error::Error::FailedToConsumeDatasource(err.to_string()))?
             .connect_timeout(Duration::from_secs(15))
             .timeout(Duration::from_secs(15))
-            .tls_config(ClientTlsConfig::new().with_enabled_roots())
-            .map_err(|err| carbon_core::error::Error::FailedToConsumeDatasource(err.to_string()))?
+            // .tls_config(ClientTlsConfig::new().with_enabled_roots())
+            // .map_err(|err| carbon_core::error::Error::FailedToConsumeDatasource(err.to_string()))?
             .connect()
             .await
             .map_err(|err| carbon_core::error::Error::FailedToConsumeDatasource(err.to_string()))?;

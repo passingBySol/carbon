@@ -52,7 +52,8 @@ impl<'a> carbon_core::instruction::InstructionDecoder<'a> for RaydiumAmmV4Decode
         &self,
         instruction: &solana_sdk::instruction::Instruction,
     ) -> Option<carbon_core::instruction::DecodedInstruction<Self::InstructionType>> {
-        carbon_core::try_decode_instructions!(instruction,
+        let now = std::time::Instant::now();
+        let result = carbon_core::try_decode_instructions!(instruction,
             RaydiumAmmV4Instruction::Initialize => initialize::Initialize,
             RaydiumAmmV4Instruction::Initialize2 => initialize2::Initialize2,
             RaydiumAmmV4Instruction::MonitorStep => monitor_step::MonitorStep,
@@ -69,6 +70,9 @@ impl<'a> carbon_core::instruction::InstructionDecoder<'a> for RaydiumAmmV4Decode
             RaydiumAmmV4Instruction::AdminCancelOrders => admin_cancel_orders::AdminCancelOrders,
             RaydiumAmmV4Instruction::CreateConfigAccount => create_config_account::CreateConfigAccount,
             RaydiumAmmV4Instruction::UpdateConfigAccount => update_config_account::UpdateConfigAccount,
-        )
+        );
+        let elapsed = now.elapsed();
+        println!("Decoded in {:?}", elapsed);
+        result
     }
 }

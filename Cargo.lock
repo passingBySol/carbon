@@ -3812,6 +3812,7 @@ version = "0.2.1"
 dependencies = [
  "async-trait",
  "carbon-core 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "carbon-prometheus-metrics",
  "carbon-raydium-amm-v4-decoder",
  "carbon-yellowstone-grpc-datasource",
  "dotenv",
